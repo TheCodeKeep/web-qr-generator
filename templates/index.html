@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .qr-output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Generator</h1>
+        <div class="input-group">
+            <input type="text" id="qrcode_input" placeholder="Enter your text here">
+            <button onclick="generateQRCode()">Generate QR Code</button>
+        </div>
+        <div id="qr-container" class="qr-output">
+            <!-- Generated QR code will appear here -->
+        </div>
+    </div>
+
+    <script>
+        // Initialize variables
+        const qrContainer = document.getElementById('qr-container');
+        const qrcodeInput = document.getElementById('qrcode_input');
+
+        // Function to generate QR code and display it
+        function generateQRCode() {
+            const text = qrcodeInput.value.trim();
+            
+            if (!text) {
+                alert('Please enter some text');
+                return;
+            }
+
+            // Clear previous content
+            qrContainer.innerHTML = '';
+            
+            // Make request to server
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `text=${encodeURIComponent(text)}`
+            })
+            .then(response => response.text())
+            .then(qrCodeData => {
+                if (qrCodeData) {
+                    const qrSVG = new DOMParser().parseFromString(qrCodeData, 'image/svg+xml').documentElement;
+                    qrContainer.appendChild(qrSVG);
+                } else {
+                    alert('Failed to generate QR code. Please try again later.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while generating the QR code');
+            });
+        }
+    </script>
+</body>
+</html>

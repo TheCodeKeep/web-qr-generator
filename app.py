@@ -18,14 +18,10 @@ def main():
 def generate_QR(text):
     if not text:
         return None, "Please enter some text"
-    
-    if len(text) > 1000:  # Reasonable limit for QR codes
+    if len(text) > 1000:
         return None, "Text is too long. Please keep it under 1000 characters."
-    
     try:
-        # Create QR code object with error correction level
         qr = qrcode.QRCode(
-            version=1,  # Let it auto-determine the version
             error_correction=qrcode.constants.ERROR_CORRECT_M,
             box_size=10,
             border=4,
@@ -33,10 +29,8 @@ def generate_QR(text):
         )
         qr.add_data(text)
         qr.make(fit=True)
-
         img = qr.make_image()
         return img.to_string(encoding='unicode'), None
-        
     except Exception as e:
         logger.error(f"Error generating QR code: {str(e)}")
         return None, "An error occurred while generating the QR code"
@@ -47,12 +41,9 @@ def generate():
     try:
         text = request.form.get('text', '').strip()
         qr_code, error = generate_QR(text)
-        
         if error:
             return error, 400
-        
         return qr_code
-        
     except Exception as e:
         logger.error(f"Error in generate route: {str(e)}")
         return "An internal error occurred", 500

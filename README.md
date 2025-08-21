@@ -14,10 +14,8 @@ This is a QR code generator web application built using Python and Flask. It all
 To install the required dependencies, run:
 
 ```bash
-pip install qrcode flask
+pip install -r requirements.txt
 ```
-
-This will install both the `qrcode` library for generating QR codes and Flask for serving the web application.
 
 ## 3. Features
 

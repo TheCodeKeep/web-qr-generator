@@ -1,90 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>QR Code Generator</title>
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .qr-output {
-            margin-top: 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online QR code generator. Create QR codes instantly for text, URLs, emails, phone numbers and more. High-quality SVG output with download option.">
+    <meta name="keywords" content="QR code, generator, free, online, SVG, download, URL, text">
+    <meta name="author" content="QR Generator">
+    <title>QR Code Generator - Create QR Codes Instantly</title>
+    
+    <!-- Favicon and icons -->
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    
+    <!-- Fonts and external resources -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>QR Code Generator</h1>
-        <div class="input-group">
-            <input type="text" id="qrcode_input" placeholder="Enter your text here">
-            <button onclick="generateQRCode()">Generate QR Code</button>
+        <div class="header">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+            <h1>QR Generator</h1>
+            <p>Create beautiful QR codes instantly for any text, URL, or data</p>
         </div>
-        <div id="qr-container" class="qr-output">
-            <!-- Generated QR code will appear here -->
+
+        <div class="content">
+            <div class="input-section">
+                <label for="qrcode_input" class="input-label">
+                    <i class="fas fa-edit"></i> Enter your content
+                </label>
+                <div class="input-wrapper">
+                    <i class="fas fa-keyboard input-icon"></i>
+                    <input 
+                        type="text" 
+                        id="qrcode_input" 
+                        class="input-field"
+                        placeholder="Enter text, URL, email, phone number..."
+                        maxlength="500"
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="generateQRCode()" id="generate-btn">
+                        <i class="fas fa-magic"></i>
+                        <span>Generate QR Code</span>
+                    </button>
+                    <button class="btn btn-secondary hidden" onclick="downloadQRCode()" id="download-btn">
+                        <i class="fas fa-download"></i>
+                        <span>Download</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick suggestions section -->
+            <div class="suggestions-section">
+                <label class="input-label">
+                    <i class="fas fa-lightbulb"></i> Quick Examples
+                </label>
+                <div class="suggestions-grid" id="suggestions-container">
+                    <!-- Suggestions will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="message-container"></div>
+
+            <div id="qr-output" class="qr-output hidden">
+                <div class="qr-container" id="qr-container">
+                    <!-- Generated QR code will appear here -->
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="codes-generated">0</div>
+                    <div class="stat-label">Codes Generated</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Free Usage</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">SVG</div>
+                    <div class="stat-label">High Quality</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Initialize variables
-        const qrContainer = document.getElementById('qr-container');
-        const qrcodeInput = document.getElementById('qrcode_input');
-
-        // Function to generate QR code and display it
-        function generateQRCode() {
-            const text = qrcodeInput.value.trim();
-            
-            if (!text) {
-                alert('Please enter some text');
-                return;
-            }
-
-            // Clear previous content
-            qrContainer.innerHTML = '';
-            
-            // Make request to server
-            fetch('/generate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `text=${encodeURIComponent(text)}`
-            })
-            .then(response => response.text())
-            .then(qrCodeData => {
-                if (qrCodeData) {
-                    const qrSVG = new DOMParser().parseFromString(qrCodeData, 'image/svg+xml').documentElement;
-                    qrContainer.appendChild(qrSVG);
-                } else {
-                    alert('Failed to generate QR code. Please try again later.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while generating the QR code');
-            });
-        }
-    </script>
+    <!-- Custom JavaScript -->
+    <script src="/static/js/main.js"></script>
 </body>
 </html>

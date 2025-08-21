@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request
 import qrcode
 import qrcode.image.svg
+import logging
 
 app = Flask(__name__)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 @app.route('/')
@@ -12,30 +17,47 @@ def main():
 
 def generate_QR(text):
     if not text:
-        return "Please enter some text"
-    # Create QR code object with error correction level
-    qr = qrcode.QRCode(
-        version=10,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-        image_factory=qrcode.image.svg.SvgFillImage,
-    )
-    qr.add_data(text)
-    qr.make(fit=True)
-
-    img = qr.make_image()
-
-    # img.save('static/qrcode.svg')
-    return img.to_string(encoding='unicode')
+        return None, "Please enter some text"
+    if len(text) > 1000:
+        return None, "Text is too long. Please keep it under 1000 characters."
+    try:
+        qr = qrcode.QRCode(
+            error_correction=qrcode.constants.ERROR_CORRECT_M,
+            box_size=10,
+            border=4,
+            image_factory=qrcode.image.svg.SvgFillImage,
+        )
+        qr.add_data(text)
+        qr.make(fit=True)
+        img = qr.make_image()
+        return img.to_string(encoding='unicode'), None
+    except Exception as e:
+        logger.error(f"Error generating QR code: {str(e)}")
+        return None, "An error occurred while generating the QR code"
 
 
 @app.route('/generate', methods=['POST'])
 def generate():
-    text = request.form.get('text')
-    qr_code = generate_QR(text)
+    try:
+        text = request.form.get('text', '').strip()
+        qr_code, error = generate_QR(text)
+        if error:
+            return error, 400
+        return qr_code
+    except Exception as e:
+        logger.error(f"Error in generate route: {str(e)}")
+        return "An internal error occurred", 500
 
-    return qr_code
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('index.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    logger.error(f"Internal server error: {str(error)}")
+    return "Internal server error", 500
 
 
 if __name__ == "__main__":

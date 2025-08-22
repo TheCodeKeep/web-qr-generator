@@ -94,12 +94,85 @@ body {
     padding: 2rem;
 }
 
+/* Enhanced input section - Make it stand out more */
 .input-section {
     margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(99, 102, 241, 0.04) 100%);
+    border: 2px solid rgba(99, 102, 241, 0.15);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
 }
 
+/* Add a subtle accent border */
+.input-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+/* Keep suggestions section more subtle */
 .suggestions-section {
     margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Expandable suggestions styles - More subtle */
+.expandable-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    background: rgba(99, 102, 241, 0.03);
+    border: 1px solid rgba(99, 102, 241, 0.08);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.expandable-header:hover {
+    background: rgba(99, 102, 241, 0.06);
+    border-color: rgba(99, 102, 241, 0.15);
+    color: var(--text-primary);
+}
+
+.expand-icon {
+    transition: transform 0.3s ease;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.expand-icon.expanded {
+    transform: rotate(180deg);
+}
+
+.suggestions-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.suggestions-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+}
+
+.suggestions-content.expanded {
+    max-height: 500px;
+    opacity: 0.95;
+    padding-top: 0.75rem;
 }
 
 .suggestions-grid {
@@ -110,13 +183,13 @@ body {
 }
 
 .suggestion-item {
-    padding: 0.75rem 1rem;
-    background: rgba(99, 102, 241, 0.05);
-    border: 1px solid var(--border-color);
+    padding: 0.65rem 0.875rem;
+    background: rgba(99, 102, 241, 0.03);
+    border: 1px solid rgba(99, 102, 241, 0.08);
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
@@ -124,65 +197,81 @@ body {
 }
 
 .suggestion-item:hover {
-    background: rgba(99, 102, 241, 0.1);
-    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.15);
     color: var(--text-primary);
     transform: translateY(-1px);
 }
 
 .suggestion-item i {
     color: var(--primary-color);
-    font-size: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
+/* Enhanced input label */
 .input-label {
     display: block;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
     color: var(--text-primary);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input-label i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
 }
 
 .input-wrapper {
     position: relative;
+    margin-bottom: 1rem;
 }
 
+/* Enhanced input field */
 .input-field {
     width: 100%;
-    padding: 1rem 1rem 1rem 3rem;
-    font-size: 1rem;
+    padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+    font-size: 1.1rem;
     border: 2px solid var(--border-color);
     border-radius: var(--border-radius);
     background: var(--secondary-color);
     color: var(--text-primary);
     transition: var(--transition);
     outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .input-field:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
 }
 
 .input-icon {
     position: absolute;
-    left: 1rem;
+    left: 1.25rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-secondary);
-    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-size: 1.3rem;
 }
 
 .button-group {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
 }
 
+/* Enhanced buttons */
 .btn {
     flex: 1;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 1.25rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -190,19 +279,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     text-decoration: none;
+    box-shadow: var(--shadow);
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
     color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #4338ca 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25);
 }
 
 .btn:disabled {
@@ -218,6 +309,11 @@ body {
 .btn-secondary:hover:not(:disabled) {
     background: var(--text-secondary);
     color: white;
+    transform: translateY(-2px);
+}
+
+.btn i {
+    font-size: 1.2rem;
 }
 
 .loading-spinner {
@@ -304,12 +400,18 @@ body {
         padding: 1.5rem;
     }
 
+    .input-section {
+        padding: 1.25rem;
+    }
+
     .button-group {
         flex-direction: column;
     }
 
     .btn {
         width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
     }
 
     .suggestions-grid {
@@ -320,6 +422,20 @@ body {
     .suggestion-item {
         padding: 0.6rem 0.8rem;
         font-size: 0.8rem;
+    }
+
+    .expandable-header {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .input-field {
+        padding: 1rem 1rem 1rem 3rem;
+        font-size: 1rem;
+    }
+
+    .input-label {
+        font-size: 1rem;
     }
 }
 

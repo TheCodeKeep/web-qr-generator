@@ -6,7 +6,7 @@
 ![Flask](https://img.shields.io/badge/Flask-3.1.2-000000?style=for-the-badge&logo=flask)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**A modern web application for generating QR codes instantly**
+**A web application for generating QR codes instantly**
 
 </div>
 

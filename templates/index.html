@@ -59,13 +59,16 @@
                 </div>
             </div>
 
-            <!-- Quick suggestions section -->
+            <!-- Quick suggestions section - Expandable -->
             <div class="suggestions-section">
-                <label class="input-label">
+                <button class="expandable-header" onclick="toggleSuggestions()">
                     <i class="fas fa-lightbulb"></i> Quick Examples
-                </label>
-                <div class="suggestions-grid" id="suggestions-container">
-                    <!-- Suggestions will be populated by JavaScript -->
+                    <i class="fas fa-chevron-down expand-icon" id="expand-icon"></i>
+                </button>
+                <div class="suggestions-content collapsed" id="suggestions-content">
+                    <div class="suggestions-grid" id="suggestions-container">
+                        <!-- Suggestions will be populated by JavaScript -->
+                    </div>
                 </div>
             </div>
 

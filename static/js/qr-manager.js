@@ -64,12 +64,14 @@ class QRManager {
      * @param {string} qrCodeData - The SVG data of the QR code
      */
     handleSuccess(qrCodeData) {
-        setLoading(false);
-        
+        // Validate QR code data
         if (!qrCodeData || !qrCodeData.trim()) {
             throw new Error('Invalid QR code data received');
         }
-
+        
+        // Clear loading state
+        setLoading(false);
+        
         // Store current QR data for download
         this.currentQRData = qrCodeData;
         

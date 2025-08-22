@@ -90,7 +90,6 @@ function updateTheme() {
 function toggleSuggestions() {
     const suggestionsContent = document.getElementById('suggestions-content');
     const expandIcon = document.getElementById('expand-icon');
-    
     if (suggestionsContent.classList.contains('collapsed')) {
         suggestionsContent.classList.remove('collapsed');
         suggestionsContent.classList.add('expanded');
@@ -99,6 +98,11 @@ function toggleSuggestions() {
         suggestionsContent.classList.remove('expanded');
         suggestionsContent.classList.add('collapsed');
         expandIcon.classList.remove('expanded');
+    }
+    // Update aria-expanded on the header/button
+    const button = document.querySelector('.expandable-header');
+    if (button) {
+        button.setAttribute('aria-expanded', !suggestionsContent.classList.contains('collapsed'));
     }
 }
 

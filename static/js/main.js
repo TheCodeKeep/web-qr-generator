@@ -25,7 +25,7 @@ const suggestions = [
     { text: 'tel:+1234567890', icon: 'fas fa-phone', label: 'Phone Number' },
     { text: 'Hello World!', icon: 'fas fa-comment', label: 'Simple Text' },
     { text: 'https://www.example.com', icon: 'fas fa-globe', label: 'Website URL' },
-    { text: 'WiFi:T:WPA;S:MyNetwork;P:password123;H:false;;', icon: 'fas fa-wifi', label: 'WiFi Network' }
+    { text: 'WiFi:T:WPA;S:MyNetwork;P:your_password;H:false;;', icon: 'fas fa-wifi', label: 'WiFi Network' }
 ];
 
 /**

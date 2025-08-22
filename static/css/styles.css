@@ -102,6 +102,55 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Expandable suggestions styles */
+.expandable-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.expandable-header:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary-color);
+}
+
+.expand-icon {
+    transition: transform 0.3s ease;
+    color: var(--primary-color);
+}
+
+.expand-icon.expanded {
+    transform: rotate(180deg);
+}
+
+.suggestions-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.suggestions-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+}
+
+.suggestions-content.expanded {
+    max-height: 500px;
+    opacity: 1;
+    padding-top: 0.75rem;
+}
+
 .suggestions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -320,6 +369,11 @@ body {
     .suggestion-item {
         padding: 0.6rem 0.8rem;
         font-size: 0.8rem;
+    }
+
+    .expandable-header {
+        padding: 0.8rem;
+        font-size: 0.9rem;
     }
 }
 

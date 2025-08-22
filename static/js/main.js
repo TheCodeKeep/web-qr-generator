@@ -85,6 +85,24 @@ function updateTheme() {
 }
 
 /**
+ * Toggle suggestions section expansion
+ */
+function toggleSuggestions() {
+    const suggestionsContent = document.getElementById('suggestions-content');
+    const expandIcon = document.getElementById('expand-icon');
+    
+    if (suggestionsContent.classList.contains('collapsed')) {
+        suggestionsContent.classList.remove('collapsed');
+        suggestionsContent.classList.add('expanded');
+        expandIcon.classList.add('expanded');
+    } else {
+        suggestionsContent.classList.remove('expanded');
+        suggestionsContent.classList.add('collapsed');
+        expandIcon.classList.remove('expanded');
+    }
+}
+
+/**
  * Show a message to the user
  * @param {string} message - The message to display
  * @param {string} type - The type of message ('success' or 'error')

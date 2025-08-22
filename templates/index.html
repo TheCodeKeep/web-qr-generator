@@ -24,8 +24,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                <i class="fas fa-moon" id="theme-icon"></i>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle between light and dark theme">
+                <i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i>
             </button>
             <h1>QR Generator</h1>
             <p>Create QR codes instantly for any text, URL, or data</p>
@@ -34,10 +34,10 @@
         <div class="content">
             <div class="input-section">
                 <label for="qrcode_input" class="input-label">
-                    <i class="fas fa-edit"></i> Enter your content
+                    <i class="fas fa-edit" aria-hidden="true"></i> Enter your content
                 </label>
                 <div class="input-wrapper">
-                    <i class="fas fa-keyboard input-icon"></i>
+                    <i class="fas fa-keyboard input-icon" aria-hidden="true"></i>
                     <input 
                         type="text" 
                         id="qrcode_input" 
@@ -45,36 +45,37 @@
                         placeholder="Enter text, URL, email, phone number..."
                         maxlength="500"
                         autocomplete="off"
+                        aria-describedby="input-help"
                     >
                 </div>
+                <div id="input-help" class="sr-only">Enter the text or URL you want to convert to a QR code. Maximum 500 characters.</div>
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="generateQRCode()" id="generate-btn">
-                        <i class="fas fa-magic"></i>
+                    <button class="btn btn-primary" onclick="generateQRCode()" id="generate-btn" aria-describedby="generate-help">
+                        <i class="fas fa-magic" aria-hidden="true"></i>
                         <span>Generate QR Code</span>
                     </button>
-                    <button class="btn btn-secondary hidden" onclick="downloadQRCode()" id="download-btn">
-                        <i class="fas fa-download"></i>
+                    <button class="btn btn-secondary hidden" onclick="downloadQRCode()" id="download-btn" aria-label="Download generated QR code as SVG file">
+                        <i class="fas fa-download" aria-hidden="true"></i>
                         <span>Download</span>
                     </button>
                 </div>
+                <div id="generate-help" class="sr-only">Click to generate a QR code from your entered text</div>
             </div>
 
-            <!-- Quick suggestions section - Expandable -->
             <div class="suggestions-section">
-                <button class="expandable-header" onclick="toggleSuggestions()" aria-expanded="false" aria-controls="suggestions-content">
-                    <i class="fas fa-lightbulb"></i> Quick Examples
-                    <i class="fas fa-chevron-down expand-icon" id="expand-icon"></i>
+                <button class="expandable-header" onclick="toggleSuggestions()" aria-expanded="false" aria-controls="suggestions-content" aria-label="Toggle quick examples section">
+                    <span><i class="fas fa-lightbulb" aria-hidden="true"></i> Quick Examples</span>
+                    <i class="fas fa-chevron-down expand-icon" id="expand-icon" aria-hidden="true"></i>
                 </button>
-                <div class="suggestions-content collapsed" id="suggestions-content">
-                    <div class="suggestions-grid" id="suggestions-container">
-                        <!-- Suggestions will be populated by JavaScript -->
+                <div class="suggestions-content collapsed" id="suggestions-content" role="region" aria-label="Quick example suggestions">
+                    <div class="suggestions-grid" id="suggestions-container" role="group" aria-label="Example QR code templates">
                     </div>
                 </div>
             </div>
 
-            <div id="message-container"></div>
+            <div id="message-container" role="status" aria-live="polite"></div>
 
-            <div id="qr-output" class="qr-output hidden">
+            <div id="qr-output" class="qr-output hidden" role="region" aria-label="Generated QR code">
                 <div class="qr-container" id="qr-container">
                     <!-- Generated QR code will appear here -->
                 </div>
@@ -82,22 +83,22 @@
 
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-number" id="codes-generated">0</div>
+                    <div class="stat-number" id="codes-generated" aria-label="Number of QR codes generated">0</div>
                     <div class="stat-label">Codes Generated</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">∞</div>
+                    <div class="stat-number" aria-label="Unlimited usage available">∞</div>
                     <div class="stat-label">Free Usage</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">SVG</div>
+                    <div class="stat-number" aria-label="High quality SVG format">SVG</div>
                     <div class="stat-label">High Quality</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom JavaScript -->
-    <script src="/static/js/main.js"></script>
+    <!-- Load main application -->
+    <script type="module" src="/static/js/main.js"></script>
 </body>
 </html>

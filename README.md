@@ -1,4 +1,4 @@
-# QR Generator
+# Web QR Generator
 
 <div align="center">
 

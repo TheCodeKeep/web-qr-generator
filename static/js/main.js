@@ -90,19 +90,18 @@ function updateTheme() {
 function toggleSuggestions() {
     const suggestionsContent = document.getElementById('suggestions-content');
     const expandIcon = document.getElementById('expand-icon');
+    const expandableHeader = document.querySelector('.expandable-header');
+    
     if (suggestionsContent.classList.contains('collapsed')) {
         suggestionsContent.classList.remove('collapsed');
         suggestionsContent.classList.add('expanded');
         expandIcon.classList.add('expanded');
+        expandableHeader.setAttribute('aria-expanded', 'true');
     } else {
         suggestionsContent.classList.remove('expanded');
         suggestionsContent.classList.add('collapsed');
         expandIcon.classList.remove('expanded');
-    }
-    // Update aria-expanded on the header/button
-    const button = document.querySelector('.expandable-header');
-    if (button) {
-        button.setAttribute('aria-expanded', !suggestionsContent.classList.contains('collapsed'));
+        expandableHeader.setAttribute('aria-expanded', 'false');
     }
 }
 
@@ -292,7 +291,7 @@ function downloadQRCode() {
 }
 
 /**
- * Populate suggestions in the UI
+ * Populate suggestions in the UI using proper button elements
  */
 function populateSuggestions() {
     const suggestionsContainer = document.getElementById('suggestions-container');
@@ -300,15 +299,29 @@ function populateSuggestions() {
     
     suggestionsContainer.innerHTML = '';
     
-    suggestions.forEach(suggestion => {
-        const suggestionElement = document.createElement('div');
-        suggestionElement.className = 'suggestion-item';
-        suggestionElement.innerHTML = `
-            <i class="${suggestion.icon}"></i>
+    suggestions.forEach((suggestion, index) => {
+        // Create proper button element for accessibility
+        const suggestionButton = document.createElement('button');
+        suggestionButton.className = 'suggestion-item';
+        suggestionButton.type = 'button';
+        suggestionButton.setAttribute('aria-label', `Use ${suggestion.label} as QR code content`);
+        suggestionButton.innerHTML = `
+            <i class="${suggestion.icon}" aria-hidden="true"></i>
             <span>${suggestion.label}</span>
         `;
-        suggestionElement.addEventListener('click', () => addSuggestion(suggestion.text));
-        suggestionsContainer.appendChild(suggestionElement);
+        
+        // Add click event listener
+        suggestionButton.addEventListener('click', () => addSuggestion(suggestion.text));
+        
+        // Add keyboard support for Enter and Space
+        suggestionButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                addSuggestion(suggestion.text);
+            }
+        });
+        
+        suggestionsContainer.appendChild(suggestionButton);
     });
 }
 

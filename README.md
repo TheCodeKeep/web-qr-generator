@@ -1,4 +1,4 @@
-# 🔲 QR Generator
+# QR Generator
 
 <div align="center">
 

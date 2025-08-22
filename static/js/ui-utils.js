@@ -40,13 +40,13 @@ export function setLoading(loading) {
     
     if (loading) {
         generateBtn.disabled = true;
-        btnIcon.className = '';
-        btnIcon.innerHTML = '<div class="loading-spinner"></div>';
+        btnIcon.classList.remove('fa-magic');
+        btnIcon.classList.add('fa-spinner', 'fa-spin');
         btnText.textContent = 'Generating...';
     } else {
         generateBtn.disabled = false;
-        btnIcon.className = 'fas fa-magic';
-        btnIcon.innerHTML = '';
+        btnIcon.classList.remove('fa-spinner', 'fa-spin');
+        btnIcon.classList.add('fa-magic');
         btnText.textContent = 'Generate QR Code';
     }
 }

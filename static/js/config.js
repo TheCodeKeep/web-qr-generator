@@ -17,6 +17,9 @@ export const SUGGESTIONS = [
     { text: 'WiFi:T:WPA;S:MyNetwork;P:your_password;H:false;;', icon: 'fas fa-wifi', label: 'WiFi Network' }
 ];
 
+/**
+ * Cached DOM elements (via module-based singleton)
+ */
 export const ELEMENTS = (() => {
     const cache = {};
     return {

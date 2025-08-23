@@ -56,7 +56,14 @@ class QRManager {
             throw new Error('Network response was not ok');
         }
 
-        return await response.text();
+        const qrCodeData = await response.text();
+        
+        // Validate QR code data here - will be caught by try-catch in generate()
+        if (!qrCodeData || !qrCodeData.trim()) {
+            throw new Error('Invalid QR code data received');
+        }
+        
+        return qrCodeData;
     }
 
     /**
@@ -64,12 +71,7 @@ class QRManager {
      * @param {string} qrCodeData - The SVG data of the QR code
      */
     handleSuccess(qrCodeData) {
-        // Validate QR code data
-        if (!qrCodeData || !qrCodeData.trim()) {
-            throw new Error('Invalid QR code data received');
-        }
-        
-        // Clear loading state
+        // No validation needed here - already validated in fetchQRCode
         setLoading(false);
         
         // Store current QR data for download

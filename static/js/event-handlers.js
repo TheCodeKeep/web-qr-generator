@@ -10,7 +10,7 @@ import { clearMessages } from './ui-utils.js';
  * Setup all event listeners
  */
 export function setupEventListeners() {
-    const qrcodeInput = ELEMENTS.qrcodeInput();
+    const qrcodeInput = ELEMENTS.qrcodeInput;
     
     // Add enter key support for input
     qrcodeInput.addEventListener('keypress', function(e) {

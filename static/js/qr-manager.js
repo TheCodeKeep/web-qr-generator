@@ -17,7 +17,7 @@ class QRManager {
      * Generate QR code and display it
      */
     async generate() {
-        const qrcodeInput = ELEMENTS.qrcodeInput();
+        const qrcodeInput = ELEMENTS.qrcodeInput;
         const text = sanitizeInput(qrcodeInput.value);
         
         // Validate input
@@ -71,25 +71,24 @@ class QRManager {
      * @param {string} qrCodeData - The SVG data of the QR code
      */
     handleSuccess(qrCodeData) {
-        // No validation needed here - already validated in fetchQRCode
         setLoading(false);
         
         // Store current QR data for download
         this.currentQRData = qrCodeData;
         
         // Parse and display the SVG
-        const qrContainer = ELEMENTS.qrContainer();
+        const qrContainer = ELEMENTS.qrContainer;
         const qrSVG = new DOMParser().parseFromString(qrCodeData, 'image/svg+xml').documentElement;
         qrContainer.innerHTML = '';
         qrContainer.appendChild(qrSVG);
         
         // Show the QR code container
-        const qrOutput = ELEMENTS.qrOutput();
+        const qrOutput = ELEMENTS.qrOutput;
         qrOutput.classList.remove('hidden');
         qrOutput.classList.add('fade-in');
         
         // Show download button
-        const downloadBtn = ELEMENTS.downloadBtn();
+        const downloadBtn = ELEMENTS.downloadBtn;
         downloadBtn.classList.remove('hidden');
         
         // Update counter
@@ -149,7 +148,7 @@ class QRManager {
      * Update the codes generated counter
      */
     updateCounter() {
-        const codesGeneratedElement = ELEMENTS.codesGeneratedElement();
+        const codesGeneratedElement = ELEMENTS.codesGeneratedElement;
         codesGeneratedElement.textContent = this.codesGenerated;
     }
 
@@ -158,7 +157,7 @@ class QRManager {
      * @param {string} text - Text to set and generate
      */
     setInputAndGenerate(text) {
-        const qrcodeInput = ELEMENTS.qrcodeInput();
+        const qrcodeInput = ELEMENTS.qrcodeInput;
         qrcodeInput.value = text;
         this.generate();
     }

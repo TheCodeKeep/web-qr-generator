@@ -21,7 +21,7 @@ export const SUGGESTIONS = [
  * Cached DOM elements (via module-based singleton)
  */
 export const ELEMENTS = (() => {
-    const cache = {};
+    let cache = {};
     return {
         get qrContainer() {
             if (!cache.qrContainer) {
@@ -95,9 +95,8 @@ export const ELEMENTS = (() => {
             }
             return cache.suggestionsContainer;
         },
-        // Optional: Method to clear cache if needed (for testing or dynamic DOM changes)
         clearCache() {
-            Object.keys(cache).forEach(key => delete cache[key]);
+            cache = {};
         }
     };
 })();

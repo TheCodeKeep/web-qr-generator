@@ -11,7 +11,7 @@ import { ELEMENTS } from './config.js';
  */
 export function showMessage(message, type = 'success') {
     clearMessages();
-    const messageContainer = ELEMENTS.messageContainer();
+    const messageContainer = ELEMENTS.messageContainer;
     const messageDiv = document.createElement('div');
     messageDiv.className = `${type}-message fade-in`;
     
@@ -25,7 +25,7 @@ export function showMessage(message, type = 'success') {
  * Clear all messages
  */
 export function clearMessages() {
-    const messageContainer = ELEMENTS.messageContainer();
+    const messageContainer = ELEMENTS.messageContainer;
     messageContainer.innerHTML = '';
 }
 
@@ -34,7 +34,7 @@ export function clearMessages() {
  * @param {boolean} loading - Whether to show loading state
  */
 export function setLoading(loading) {
-    const generateBtn = ELEMENTS.generateBtn();
+    const generateBtn = ELEMENTS.generateBtn;
     const btnText = generateBtn.querySelector('span');
     const btnIcon = generateBtn.querySelector('i');
     

@@ -7,7 +7,7 @@ import { ELEMENTS } from './config.js';
 class ThemeManager {
     constructor() {
         this.isDarkTheme = localStorage.getItem('darkTheme') === 'true';
-        this.themeIcon = ELEMENTS.themeIcon();
+        this.themeIcon = ELEMENTS.themeIcon;
     }
 
     /**

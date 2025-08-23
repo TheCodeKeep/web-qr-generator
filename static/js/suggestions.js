@@ -10,9 +10,9 @@ class SuggestionsManager {
      * Toggle suggestions section expansion
      */
     toggle() {
-        const suggestionsContent = ELEMENTS.suggestionsContent();
-        const expandIcon = ELEMENTS.expandIcon();
-        const expandableHeader = ELEMENTS.expandableHeader();
+        const suggestionsContent = ELEMENTS.suggestionsContent;
+        const expandIcon = ELEMENTS.expandIcon;
+        const expandableHeader = ELEMENTS.expandableHeader;
         
         if (suggestionsContent.classList.contains('collapsed')) {
             suggestionsContent.classList.remove('collapsed');
@@ -31,7 +31,7 @@ class SuggestionsManager {
      * Populate suggestions in the UI using proper button elements
      */
     populate() {
-        const suggestionsContainer = ELEMENTS.suggestionsContainer();
+        const suggestionsContainer = ELEMENTS.suggestionsContainer;
         if (!suggestionsContainer) return;
         
         suggestionsContainer.innerHTML = '';
@@ -73,5 +73,4 @@ class SuggestionsManager {
 
 export const suggestionsManager = new SuggestionsManager();
 
-// Global function for HTML onclick
 window.toggleSuggestions = () => suggestionsManager.toggle();

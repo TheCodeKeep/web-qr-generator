@@ -36,86 +36,86 @@ export const SUGGESTIONS = [
  * },
  */
 export const ELEMENTS = (() => {
-    let cache = {};
+    let cache = new Map();
     return {
         get qrContainer() {
-            if (!cache.qrContainer) {
-                cache.qrContainer = document.getElementById('qr-container');
+            if (!cache.has('qrContainer')) {
+                cache.set('qrContainer', document.getElementById('qr-container'));
             }
-            return cache.qrContainer;
+            return cache.get('qrContainer');
         },
         get qrcodeInput() {
-            if (!cache.qrcodeInput) {
-                cache.qrcodeInput = document.getElementById('qrcode_input');
+            if (!cache.has('qrcodeInput')) {
+                cache.set('qrcodeInput', document.getElementById('qrcode_input'));
             }
-            return cache.qrcodeInput;
+            return cache.get('qrcodeInput');
         },
         get generateBtn() {
-            if (!cache.generateBtn) {
-                cache.generateBtn = document.getElementById('generate-btn');
+            if (!cache.has('generateBtn')) {
+                cache.set('generateBtn', document.getElementById('generate-btn'));
             }
-            return cache.generateBtn;
+            return cache.get('generateBtn');
         },
         get downloadBtn() {
-            if (!cache.downloadBtn) {
-                cache.downloadBtn = document.getElementById('download-btn');
+            if (!cache.has('downloadBtn')) {
+                cache.set('downloadBtn', document.getElementById('download-btn'));
             }
-            return cache.downloadBtn;
+            return cache.get('downloadBtn');
         },
         get qrOutput() {
-            if (!cache.qrOutput) {
-                cache.qrOutput = document.getElementById('qr-output');
+            if (!cache.has('qrOutput')) {
+                cache.set('qrOutput', document.getElementById('qr-output'));
             }
-            return cache.qrOutput;
+            return cache.get('qrOutput');
         },
         get messageContainer() {
-            if (!cache.messageContainer) {
-                cache.messageContainer = document.getElementById('message-container');
+            if (!cache.has('messageContainer')) {
+                cache.set('messageContainer', document.getElementById('message-container'));
             }
-            return cache.messageContainer;
+            return cache.get('messageContainer');
         },
         get codesGeneratedElement() {
-            if (!cache.codesGeneratedElement) {
-                cache.codesGeneratedElement = document.getElementById('codes-generated');
+            if (!cache.has('codesGeneratedElement')) {
+                cache.set('codesGeneratedElement', document.getElementById('codes-generated'));
             }
-            return cache.codesGeneratedElement;
+            return cache.get('codesGeneratedElement');
         },
         get themeIcon() {
-            if (!cache.themeIcon) {
-                cache.themeIcon = document.getElementById('theme-icon');
+            if (!cache.has('themeIcon')) {
+                cache.set('themeIcon', document.getElementById('theme-icon'));
             }
-            return cache.themeIcon;
+            return cache.get('themeIcon');
         },
         get suggestionsContent() {
-            if (!cache.suggestionsContent) {
-                cache.suggestionsContent = document.getElementById('suggestions-content');
+            if (!cache.has('suggestionsContent')) {
+                cache.set('suggestionsContent', document.getElementById('suggestions-content'));
             }
-            return cache.suggestionsContent;
+            return cache.get('suggestionsContent');
         },
         get expandIcon() {
-            if (!cache.expandIcon) {
-                cache.expandIcon = document.getElementById('expand-icon');
+            if (!cache.has('expandIcon')) {
+                cache.set('expandIcon', document.getElementById('expand-icon'));
             }
-            return cache.expandIcon;
+            return cache.get('expandIcon');
         },
         get expandableHeader() {
-            if (!cache.expandableHeader) {
-                cache.expandableHeader = document.querySelector('.expandable-header');
+            if (!cache.has('expandableHeader')) {
+                cache.set('expandableHeader', document.querySelector('.expandable-header'));
             }
-            return cache.expandableHeader;
+            return cache.get('expandableHeader');
         },
         get suggestionsContainer() {
-            if (!cache.suggestionsContainer) {
-                cache.suggestionsContainer = document.getElementById('suggestions-container');
+            if (!cache.has('suggestionsContainer')) {
+                cache.set('suggestionsContainer', document.getElementById('suggestions-container'));
             }
-            return cache.suggestionsContainer;
+            return cache.get('suggestionsContainer');
         },
         /**
          * Clear the cache - useful for testing or if DOM structure changes
          * Note: In normal operation, this should never be needed as DOM elements are static
          */
         clearCache() {
-            cache = {};
+            cache.clear();
         }
     };
 })();

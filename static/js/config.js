@@ -19,6 +19,21 @@ export const SUGGESTIONS = [
 
 /**
  * Cached DOM elements (via module-based singleton)
+ *
+ * IMPORTANT: This implementation assumes that DOM elements are static and never
+ * removed or replaced during the application lifecycle. This is safe for this
+ * QR Generator application as it only modifies element content/classes, never
+ * removes or replaces elements from the DOM.
+ * 
+ * If future modifications involve dynamic DOM manipulation (adding/removing elements),
+ * consider using ELEMENTS.clearCache() or adding validation to detect stale references.
+ * E.g.:
+ * get generateBtn() {
+ *    if (!cache.generateBtn || !cache.generateBtn.isConnected) {
+ *       cache.generateBtn = document.getElementById('generate-btn');
+ *    }
+ *    return cache.generateBtn;
+ * },
  */
 export const ELEMENTS = (() => {
     let cache = {};
@@ -95,6 +110,10 @@ export const ELEMENTS = (() => {
             }
             return cache.suggestionsContainer;
         },
+        /**
+         * Clear the cache - useful for testing or if DOM structure changes
+         * Note: In normal operation, this should never be needed as DOM elements are static
+         */
         clearCache() {
             cache = {};
         }

@@ -516,7 +516,7 @@ body {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 .fade-in {

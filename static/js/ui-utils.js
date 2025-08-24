@@ -26,7 +26,54 @@ export function showMessage(message, type = 'success') {
  */
 export function clearMessages() {
     const messageContainer = ELEMENTS.messageContainer;
-    messageContainer.innerHTML = '';
+    const messages = messageContainer.querySelectorAll('.success-message, .error-message');
+    
+    if (messages.length === 0) return;
+    
+    // Add fade-out animation to all messages
+    messages.forEach(message => {
+        message.classList.add('fade-out');
+    });
+    
+    // Remove messages after animation completes
+    setTimeout(() => {
+        messageContainer.innerHTML = '';
+    }, 250); // Match CSS transition duration
+}
+
+/**
+ * Clear the QR code output area
+ */
+export function clearQROutput() {
+    const qrOutput = ELEMENTS.qrOutput;
+    const downloadBtn = ELEMENTS.downloadBtn;
+    const qrContainer = ELEMENTS.qrContainer;
+    
+    // Only animate if QR output is currently visible
+    if (qrOutput.classList.contains('hidden')) return;
+    
+    // Start fade-out animation
+    qrOutput.classList.add('fade-out');
+    downloadBtn.classList.add('fade-out');
+    
+    // After animation completes, hide elements and clean up
+    setTimeout(() => {
+        // Hide the QR output area
+        qrOutput.classList.add('hidden');
+        qrOutput.classList.remove('fade-in', 'fade-out');
+        
+        // Hide the download button
+        downloadBtn.classList.add('hidden');
+        downloadBtn.classList.remove('fade-out');
+        
+        // Clear the QR container content
+        qrContainer.innerHTML = '';
+        
+        // Clear the current QR data in the manager
+        if (window.qrManager) {
+            window.qrManager.currentQRData = null;
+        }
+    }, 300); // Match CSS transition duration
 }
 
 /**
@@ -36,17 +83,36 @@ export function clearMessages() {
 export function setLoading(loading) {
     const generateBtn = ELEMENTS.generateBtn;
     const btnText = generateBtn.querySelector('span');
-    const btnIcon = generateBtn.querySelector('i');
+    let btnIcon = generateBtn.querySelector('i');
+    
+    // If the icon is missing, recreate it
+    if (!btnIcon) {
+        btnIcon = document.createElement('i');
+        btnIcon.className = 'fas fa-magic';
+        btnIcon.setAttribute('aria-hidden', 'true');
+        generateBtn.insertBefore(btnIcon, btnText);
+    }
     
     if (loading) {
         generateBtn.disabled = true;
+        // Store original icon classes if not already stored
+        if (!btnIcon.dataset.originalClass) {
+            btnIcon.dataset.originalClass = btnIcon.className;
+        }
         btnIcon.classList.remove('fa-magic');
         btnIcon.classList.add('fa-spinner', 'fa-spin');
         btnText.textContent = 'Generating...';
     } else {
         generateBtn.disabled = false;
         btnIcon.classList.remove('fa-spinner', 'fa-spin');
-        btnIcon.classList.add('fa-magic');
+        // Restore original icon classes if stored
+        if (btnIcon.dataset.originalClass) {
+            btnIcon.className = btnIcon.dataset.originalClass;
+            delete btnIcon.dataset.originalClass;
+        } else {
+            // Fallback to default if no original class was stored
+            btnIcon.classList.add('fa-magic');
+        }
         btnText.textContent = 'Generate QR Code';
     }
 }
@@ -59,4 +125,22 @@ export function setLoading(loading) {
  */
 export function scrollToElement(element, behavior = 'smooth', block = 'center') {
     element.scrollIntoView({ behavior, block });
+}
+
+/**
+ * Debounced clear function to prevent rapid clearing while typing
+ */
+let clearTimeoutId = null;
+
+export function debouncedClearQROutput() {
+    // Clear any existing timeout
+    if (clearTimeoutId) {
+        clearTimeout(clearTimeoutId);
+    }
+    
+    // Set a new timeout for smoother experience
+    clearTimeoutId = setTimeout(() => {
+        clearQROutput();
+        clearTimeoutId = null;
+    }, 50);
 }

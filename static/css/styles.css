@@ -453,6 +453,13 @@ body {
 .qr-output {
     margin-top: 2rem;
     text-align: center;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    transform: translateY(0);
+}
+
+.qr-output.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .qr-container {
@@ -480,6 +487,13 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    transform: translateY(0);
+}
+
+.success-message.fade-out {
+    opacity: 0;
+    transform: translateY(-5px);
 }
 
 .error-message {
@@ -492,10 +506,17 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    transform: translateY(0);
+}
+
+.error-message.fade-out {
+    opacity: 0;
+    transform: translateY(-5px);
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .fade-in {

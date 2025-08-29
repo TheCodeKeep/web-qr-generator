@@ -5,7 +5,12 @@
 export const CONFIG = {
     MAX_INPUT_LENGTH: 500,
     SCROLL_BEHAVIOR: 'smooth',
-    SCROLL_BLOCK: 'center'
+    SCROLL_BLOCK: 'center',
+    // Animation durations to match CSS transitions
+    ANIMATION_DURATIONS: {
+        MESSAGE_FADE: 250, // Match CSS transition duration for messages
+        QR_OUTPUT_FADE: 300 // Match CSS transition duration for QR output
+    }
 };
 
 export const SUGGESTIONS = [

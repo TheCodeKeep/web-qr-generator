@@ -2,7 +2,7 @@
  * UI utility functions for messages, loading states, and animations
  */
 
-import { ELEMENTS } from './config.js';
+import { ELEMENTS, CONFIG } from './config.js';
 
 /**
  * Show a message to the user
@@ -41,7 +41,7 @@ export function clearMessages() {
     // Remove messages after animation completes
     setTimeout(() => {
         messageContainer.innerHTML = '';
-    }, 250); // Match CSS transition duration
+    }, CONFIG.ANIMATION_DURATIONS.MESSAGE_FADE);
 }
 
 /**
@@ -77,7 +77,7 @@ export function clearQROutput(qrManager) {
         if (qrManager) {
             qrManager.currentQRData = null;
         }
-    }, 300); // Match CSS transition duration
+    }, CONFIG.ANIMATION_DURATIONS.QR_OUTPUT_FADE);
 }
 
 /**

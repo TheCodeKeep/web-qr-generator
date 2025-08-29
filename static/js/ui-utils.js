@@ -10,8 +10,11 @@ import { ELEMENTS } from './config.js';
  * @param {string} type - The type of message ('success' or 'error')
  */
 export function showMessage(message, type = 'success') {
-    clearMessages();
     const messageContainer = ELEMENTS.messageContainer;
+    
+    // Force clear any existing messages immediately to prevent timing conflicts
+    messageContainer.innerHTML = '';
+    
     const messageDiv = document.createElement('div');
     messageDiv.className = `${type}-message fade-in`;
     

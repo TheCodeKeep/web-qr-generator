@@ -8,20 +8,37 @@ import { ELEMENTS, CONFIG } from './config.js';
  * Show a message to the user
  * @param {string} message - The message to display
  * @param {string} type - The type of message ('success' or 'error')
+ * @param {boolean} animated - Whether to use animated clearing (default: true)
  */
-export function showMessage(message, type = 'success') {
+export function showMessage(message, type = 'success', animated = true) {
     const messageContainer = ELEMENTS.messageContainer;
     
-    // Force clear any existing messages immediately to prevent timing conflicts
-    messageContainer.innerHTML = '';
+    const displayMessage = () => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `${type}-message fade-in`;
+        
+        const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
+        messageDiv.innerHTML = `<i class="fas fa-${icon}" aria-hidden="true"></i> ${message}`;
+        
+        messageContainer.appendChild(messageDiv);
+    };
     
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `${type}-message fade-in`;
-    
-    const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
-    messageDiv.innerHTML = `<i class="fas fa-${icon}" aria-hidden="true"></i> ${message}`;
-    
-    messageContainer.appendChild(messageDiv);
+    if (animated) {
+        // Check if there are existing messages to clear
+        const existingMessages = messageContainer.querySelectorAll('.success-message, .error-message');
+        if (existingMessages.length > 0) {
+            // Clear with animation and wait for completion
+            clearMessages();
+            setTimeout(displayMessage, CONFIG.ANIMATION_DURATIONS.MESSAGE_FADE);
+        } else {
+            // No existing messages, display immediately
+            displayMessage();
+        }
+    } else {
+        // Force immediate clearing without animation
+        messageContainer.innerHTML = '';
+        displayMessage();
+    }
 }
 
 /**

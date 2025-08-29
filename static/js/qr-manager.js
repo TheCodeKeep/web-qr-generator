@@ -96,7 +96,7 @@ class QRManager {
         this.updateCounter();
         localStorage.setItem('codesGenerated', this.codesGenerated);
         
-        showMessage('QR code generated successfully!');
+        showMessage('QR code generated successfully!', 'success', false);
         
         // Scroll to QR code
         scrollToElement(qrOutput, CONFIG.SCROLL_BEHAVIOR, CONFIG.SCROLL_BLOCK);

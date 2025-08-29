@@ -22,7 +22,7 @@ export function setupEventListeners() {
     // Clear messages and QR output when user starts typing
     qrcodeInput.addEventListener('input', function() {
         clearMessages();
-        debouncedClearQROutput();
+        debouncedClearQROutput(qrManager);
     });
 
     // Add keyboard shortcuts
@@ -36,7 +36,7 @@ export function setupEventListeners() {
         // Escape to clear messages and QR output
         if (e.key === 'Escape') {
             clearMessages();
-            clearQROutput();
+            clearQROutput(qrManager);
         }
     });
 }

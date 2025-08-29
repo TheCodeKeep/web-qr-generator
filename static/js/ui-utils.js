@@ -43,35 +43,36 @@ export function clearMessages() {
 
 /**
  * Clear the QR code output area
+ * @param {object} qrManager - The QR manager instance
  */
-export function clearQROutput() {
+export function clearQROutput(qrManager) {
     const qrOutput = ELEMENTS.qrOutput;
     const downloadBtn = ELEMENTS.downloadBtn;
     const qrContainer = ELEMENTS.qrContainer;
-    
+
     // Only animate if QR output is currently visible
     if (qrOutput.classList.contains('hidden')) return;
-    
+
     // Start fade-out animation
     qrOutput.classList.add('fade-out');
     downloadBtn.classList.add('fade-out');
-    
+
     // After animation completes, hide elements and clean up
     setTimeout(() => {
         // Hide the QR output area
         qrOutput.classList.add('hidden');
         qrOutput.classList.remove('fade-in', 'fade-out');
-        
+
         // Hide the download button
         downloadBtn.classList.add('hidden');
         downloadBtn.classList.remove('fade-out');
-        
+
         // Clear the QR container content
         qrContainer.innerHTML = '';
-        
+
         // Clear the current QR data in the manager
-        if (window.qrManager) {
-            window.qrManager.currentQRData = null;
+        if (qrManager) {
+            qrManager.currentQRData = null;
         }
     }, 300); // Match CSS transition duration
 }
@@ -132,15 +133,15 @@ export function scrollToElement(element, behavior = 'smooth', block = 'center') 
  */
 let clearTimeoutId = null;
 
-export function debouncedClearQROutput() {
+export function debouncedClearQROutput(qrManager) {
     // Clear any existing timeout
     if (clearTimeoutId) {
         clearTimeout(clearTimeoutId);
     }
-    
+
     // Set a new timeout for smoother experience
     clearTimeoutId = setTimeout(() => {
-        clearQROutput();
+        clearQROutput(qrManager);
         clearTimeoutId = null;
     }, 50);
 }

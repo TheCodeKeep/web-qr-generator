@@ -5,7 +5,16 @@
 export const CONFIG = {
     MAX_INPUT_LENGTH: 500,
     SCROLL_BEHAVIOR: 'smooth',
-    SCROLL_BLOCK: 'center'
+    SCROLL_BLOCK: 'center',
+    // Animation durations to match CSS transitions
+    ANIMATION_DURATIONS: {
+        MESSAGE_FADE: 250, // Match CSS transition duration for messages
+        QR_OUTPUT_FADE: 300 // Match CSS transition duration for QR output
+    },
+    // Debounce delays for user interactions
+    DEBOUNCE_DELAYS: {
+        QR_CLEAR: 50 // Delay for debouncing QR output clearing while typing
+    }
 };
 
 export const SUGGESTIONS = [
@@ -110,10 +119,6 @@ export const ELEMENTS = (() => {
             }
             return cache.get('suggestionsContainer');
         },
-        /**
-         * Clear the cache - useful for testing or if DOM structure changes
-         * Note: In normal operation, this should never be needed as DOM elements are static
-         */
         clearCache() {
             cache.clear();
         }

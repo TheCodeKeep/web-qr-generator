@@ -2,23 +2,43 @@
  * UI utility functions for messages, loading states, and animations
  */
 
-import { ELEMENTS } from './config.js';
+import { ELEMENTS, CONFIG } from './config.js';
 
 /**
  * Show a message to the user
  * @param {string} message - The message to display
  * @param {string} type - The type of message ('success' or 'error')
+ * @param {boolean} animated - Whether to use animated clearing (default: true)
  */
-export function showMessage(message, type = 'success') {
-    clearMessages();
+export function showMessage(message, type = 'success', animated = true) {
     const messageContainer = ELEMENTS.messageContainer;
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `${type}-message fade-in`;
     
-    const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
-    messageDiv.innerHTML = `<i class="fas fa-${icon}" aria-hidden="true"></i> ${message}`;
+    const displayMessage = () => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `${type}-message fade-in`;
+        
+        const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
+        messageDiv.innerHTML = `<i class="fas fa-${icon}" aria-hidden="true"></i> ${message}`;
+        
+        messageContainer.appendChild(messageDiv);
+    };
     
-    messageContainer.appendChild(messageDiv);
+    if (animated) {
+        // Check if there are existing messages to clear
+        const existingMessages = messageContainer.querySelectorAll('.success-message, .error-message');
+        if (existingMessages.length > 0) {
+            // Clear with animation and wait for completion
+            clearMessages();
+            setTimeout(displayMessage, CONFIG.ANIMATION_DURATIONS.MESSAGE_FADE);
+        } else {
+            // No existing messages, display immediately
+            displayMessage();
+        }
+    } else {
+        // Force immediate clearing without animation
+        messageContainer.innerHTML = '';
+        displayMessage();
+    }
 }
 
 /**
@@ -26,7 +46,55 @@ export function showMessage(message, type = 'success') {
  */
 export function clearMessages() {
     const messageContainer = ELEMENTS.messageContainer;
-    messageContainer.innerHTML = '';
+    const messages = messageContainer.querySelectorAll('.success-message, .error-message');
+    
+    if (messages.length === 0) return;
+    
+    // Add fade-out animation to all messages
+    messages.forEach(message => {
+        message.classList.add('fade-out');
+    });
+    
+    // Remove messages after animation completes
+    setTimeout(() => {
+        messageContainer.innerHTML = '';
+    }, CONFIG.ANIMATION_DURATIONS.MESSAGE_FADE);
+}
+
+/**
+ * Clear the QR code output area
+ * @param {object} qrManager - The QR manager instance
+ */
+export function clearQROutput(qrManager) {
+    const qrOutput = ELEMENTS.qrOutput;
+    const downloadBtn = ELEMENTS.downloadBtn;
+    const qrContainer = ELEMENTS.qrContainer;
+
+    // Only animate if QR output is currently visible
+    if (qrOutput.classList.contains('hidden')) return;
+
+    // Start fade-out animation
+    qrOutput.classList.add('fade-out');
+    downloadBtn.classList.add('fade-out');
+
+    // After animation completes, hide elements and clean up
+    setTimeout(() => {
+        // Hide the QR output area
+        qrOutput.classList.add('hidden');
+        qrOutput.classList.remove('fade-in', 'fade-out');
+
+        // Hide the download button
+        downloadBtn.classList.add('hidden');
+        downloadBtn.classList.remove('fade-out');
+
+        // Clear the QR container content
+        qrContainer.innerHTML = '';
+
+        // Clear the current QR data in the manager
+        if (qrManager) {
+            qrManager.currentQRData = null;
+        }
+    }, CONFIG.ANIMATION_DURATIONS.QR_OUTPUT_FADE);
 }
 
 /**
@@ -36,17 +104,36 @@ export function clearMessages() {
 export function setLoading(loading) {
     const generateBtn = ELEMENTS.generateBtn;
     const btnText = generateBtn.querySelector('span');
-    const btnIcon = generateBtn.querySelector('i');
+    let btnIcon = generateBtn.querySelector('i');
+    
+    // If the icon is missing, recreate it
+    if (!btnIcon) {
+        btnIcon = document.createElement('i');
+        btnIcon.className = 'fas fa-magic';
+        btnIcon.setAttribute('aria-hidden', 'true');
+        generateBtn.insertBefore(btnIcon, btnText);
+    }
     
     if (loading) {
         generateBtn.disabled = true;
+        // Store original icon classes if not already stored
+        if (!btnIcon.dataset.originalClass) {
+            btnIcon.dataset.originalClass = btnIcon.className;
+        }
         btnIcon.classList.remove('fa-magic');
         btnIcon.classList.add('fa-spinner', 'fa-spin');
         btnText.textContent = 'Generating...';
     } else {
         generateBtn.disabled = false;
         btnIcon.classList.remove('fa-spinner', 'fa-spin');
-        btnIcon.classList.add('fa-magic');
+        // Restore original icon classes if stored
+        if (btnIcon.dataset.originalClass) {
+            btnIcon.className = btnIcon.dataset.originalClass;
+            delete btnIcon.dataset.originalClass;
+        } else {
+            // Fallback to default if no original class was stored
+            btnIcon.classList.add('fa-magic');
+        }
         btnText.textContent = 'Generate QR Code';
     }
 }
@@ -60,3 +147,25 @@ export function setLoading(loading) {
 export function scrollToElement(element, behavior = 'smooth', block = 'center') {
     element.scrollIntoView({ behavior, block });
 }
+
+/**
+ * Debounced clear function to prevent rapid clearing while typing
+ */
+const createDebouncedClearQROutput = () => {
+    let timeoutId = null;
+    
+    return (qrManager, delay = CONFIG.DEBOUNCE_DELAYS.QR_CLEAR) => {
+        // Clear any existing timeout
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        // Set a new timeout for smoother experience
+        timeoutId = setTimeout(() => {
+            clearQROutput(qrManager);
+            timeoutId = null;
+        }, delay);
+    };
+};
+
+export const debouncedClearQROutput = createDebouncedClearQROutput();

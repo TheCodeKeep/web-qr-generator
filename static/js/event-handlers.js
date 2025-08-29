@@ -4,7 +4,7 @@
 
 import { ELEMENTS } from './config.js';
 import { qrManager } from './qr-manager.js';
-import { clearMessages } from './ui-utils.js';
+import { clearMessages, clearQROutput, debouncedClearQROutput } from './ui-utils.js';
 
 /**
  * Setup all event listeners
@@ -19,9 +19,10 @@ export function setupEventListeners() {
         }
     });
 
-    // Clear messages when user starts typing
+    // Clear messages and QR output when user starts typing
     qrcodeInput.addEventListener('input', function() {
         clearMessages();
+        debouncedClearQROutput(qrManager);
     });
 
     // Add keyboard shortcuts
@@ -32,9 +33,10 @@ export function setupEventListeners() {
             qrManager.generate();
         }
         
-        // Escape to clear messages
+        // Escape to clear messages and QR output
         if (e.key === 'Escape') {
             clearMessages();
+            clearQROutput(qrManager);
         }
     });
 }

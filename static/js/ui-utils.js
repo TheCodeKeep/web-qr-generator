@@ -131,17 +131,21 @@ export function scrollToElement(element, behavior = 'smooth', block = 'center') 
 /**
  * Debounced clear function to prevent rapid clearing while typing
  */
-let clearTimeoutId = null;
+const createDebouncedClearQROutput = () => {
+    let timeoutId = null;
+    
+    return (qrManager, delay = 50) => {
+        // Clear any existing timeout
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
 
-export function debouncedClearQROutput(qrManager) {
-    // Clear any existing timeout
-    if (clearTimeoutId) {
-        clearTimeout(clearTimeoutId);
-    }
+        // Set a new timeout for smoother experience
+        timeoutId = setTimeout(() => {
+            clearQROutput(qrManager);
+            timeoutId = null;
+        }, delay);
+    };
+};
 
-    // Set a new timeout for smoother experience
-    clearTimeoutId = setTimeout(() => {
-        clearQROutput(qrManager);
-        clearTimeoutId = null;
-    }, 50);
-}
+export const debouncedClearQROutput = createDebouncedClearQROutput();

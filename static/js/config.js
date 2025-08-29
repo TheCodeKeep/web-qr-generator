@@ -10,6 +10,10 @@ export const CONFIG = {
     ANIMATION_DURATIONS: {
         MESSAGE_FADE: 250, // Match CSS transition duration for messages
         QR_OUTPUT_FADE: 300 // Match CSS transition duration for QR output
+    },
+    // Debounce delays for user interactions
+    DEBOUNCE_DELAYS: {
+        QR_CLEAR: 50 // Delay for debouncing QR output clearing while typing
     }
 };
 
@@ -115,10 +119,6 @@ export const ELEMENTS = (() => {
             }
             return cache.get('suggestionsContainer');
         },
-        /**
-         * Clear the cache - useful for testing or if DOM structure changes
-         * Note: In normal operation, this should never be needed as DOM elements are static
-         */
         clearCache() {
             cache.clear();
         }

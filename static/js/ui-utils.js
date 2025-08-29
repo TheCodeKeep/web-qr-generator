@@ -137,7 +137,7 @@ export function scrollToElement(element, behavior = 'smooth', block = 'center') 
 const createDebouncedClearQROutput = () => {
     let timeoutId = null;
     
-    return (qrManager, delay = 50) => {
+    return (qrManager, delay = CONFIG.DEBOUNCE_DELAYS.QR_CLEAR) => {
         // Clear any existing timeout
         if (timeoutId) {
             clearTimeout(timeoutId);

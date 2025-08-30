@@ -3,7 +3,6 @@ import qrcode
 import qrcode.image.svg
 import logging
 import sys
-from typing import TypeAlias
 
 app = Flask(__name__)
 
@@ -19,17 +18,13 @@ if sys.version_info < (3, 10):
 # Log Python version for debugging
 logger.info(f"Running on Python {sys.version}")
 
-QRSuccess: TypeAlias = tuple[str, None]
-QRError: TypeAlias = tuple[None, str]
-QRResponse: TypeAlias = QRSuccess | QRError
-
 
 @app.route('/')
 def main():
     return render_template('index.html')
 
 
-def generate_QR(text: str) -> QRResponse:
+def generate_QR(text: str) -> tuple[str | None, str | None]:
     if not text:
         return None, "Please enter some text"
     if len(text) > 1000:
@@ -54,10 +49,10 @@ def generate_QR(text: str) -> QRResponse:
 def generate():
     try:
         text = request.form.get('text', '').strip()
-        qr_code, error = generate_QR(text)
+        result, error = generate_QR(text)
         if error:
             return error, 400
-        return qr_code
+        return result
     except Exception as e:
         logger.error(f"Error in generate route: {str(e)}")
         return "An internal error occurred", 500

@@ -2,9 +2,9 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.8+-3776ab?style=for-the-badge&logo=python)
+![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=for-the-badge&logo=python)
 ![Flask](https://img.shields.io/badge/Flask-3.1.2-000000?style=for-the-badge&logo=flask)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Apache_2.0-green?style=for-the-badge)
 
 **A web application for generating QR codes instantly**
 
@@ -26,7 +26,7 @@ A responsive Flask web application that creates QR codes from text, URLs, emails
 ## Quick Start
 
 ### Prerequisites
-- Python 3.8+
+- **Python 3.10+**
 - pip (included with Python)
 
 ### Installation
@@ -73,9 +73,18 @@ web-qr-generator/
 ```
 
 ### Tech Stack
-- **Backend**: Python 3.8+, Flask 3.1.2
+- **Backend**: Python 3.10+, Flask 3.1.2
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
 - **QR Generation**: qrcode library (SVG output)
+
+### Python Version Support
+| Version | Status | Notes |
+|---------|--------|-------|
+| 3.13+ | ✅ Recommended | Latest features and best performance |
+| 3.12 | ✅ Excellent | Great performance and features |
+| 3.11 | ✅ Great | Excellent performance improvements |
+| 3.10 | ✅ Minimum Required | Union types, match statements |
+| <3.10 | ❌ Not supported | Please upgrade Python |
 
 ### API Endpoints
 - `GET /` - Main application page
@@ -90,43 +99,12 @@ python app.py  # Server auto-reloads on changes
 
 ## Configuration
 
-### Environment Variables
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `FLASK_ENV` | `development` | Flask environment |
-| `FLASK_DEBUG` | `True` | Debug mode |
-| `PORT` | `5000` | Server port |
-
 ### Customization
 Modify CSS variables in `static/css/styles.css` for theming, or adjust QR settings in `app.py`.
 
-## Deployment
-
-### Local
-```bash
-python app.py
-```
-
-### Production
-```bash
-pip install gunicorn
-gunicorn --bind 0.0.0.0:5000 app:app
-```
-
-### Docker
-```dockerfile
-FROM python:3.8-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD ["python", "app.py"]
-```
-
 ## License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+Apache License 2.0 - see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 

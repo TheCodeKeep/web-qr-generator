@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import qrcode
 import qrcode.image.svg
 import logging
+import sys
+from typing import Optional
 
 app = Flask(__name__)
 
@@ -9,13 +11,18 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Check Python version compatibility
+if sys.version_info < (3, 10):
+    logger.error("Python 3.10+ is required for this application")
+    sys.exit(1)
+
 
 @app.route('/')
 def main():
     return render_template('index.html')
 
 
-def generate_QR(text):
+def generate_QR(text: str) -> tuple[Optional[str], Optional[str]]:
     if not text:
         return None, "Please enter some text"
     if len(text) > 1000:

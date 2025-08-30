@@ -3,7 +3,7 @@ import qrcode
 import qrcode.image.svg
 import logging
 import sys
-from typing import Optional
+from typing import TypeAlias
 
 app = Flask(__name__)
 
@@ -19,13 +19,17 @@ if sys.version_info < (3, 10):
 # Log Python version for debugging
 logger.info(f"Running on Python {sys.version}")
 
+QRResult: TypeAlias = tuple[str, None]  # Success: (qr_code, None)
+QRError: TypeAlias = tuple[None, str]   # Error: (None, error_message)
+QRResponse: TypeAlias = QRResult | QRError
+
 
 @app.route('/')
 def main():
     return render_template('index.html')
 
 
-def generate_QR(text: str) -> tuple[Optional[str], Optional[str]]:
+def generate_QR(text: str) -> QRResponse:
     if not text:
         return None, "Please enter some text"
     if len(text) > 1000:

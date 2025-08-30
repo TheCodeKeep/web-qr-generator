@@ -19,9 +19,9 @@ if sys.version_info < (3, 10):
 # Log Python version for debugging
 logger.info(f"Running on Python {sys.version}")
 
-QRResult: TypeAlias = tuple[str, None]  # Success: (qr_code, None)
-QRError: TypeAlias = tuple[None, str]   # Error: (None, error_message)
-QRResponse: TypeAlias = QRResult | QRError
+QRSuccess: TypeAlias = tuple[str, None]
+QRError: TypeAlias = tuple[None, str]
+QRResponse: TypeAlias = QRSuccess | QRError
 
 
 @app.route('/')

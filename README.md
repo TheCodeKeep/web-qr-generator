@@ -26,7 +26,7 @@ A responsive Flask web application that creates QR codes from text, URLs, emails
 ## Quick Start
 
 ### Prerequisites
-- **Python 3.10+** (Python 3.11+ recommended for best performance)
+- **Python 3.10+**
 - pip (included with Python)
 
 ### Installation
@@ -35,9 +35,6 @@ A responsive Flask web application that creates QR codes from text, URLs, emails
 # Clone the repository
 git clone https://github.com/sharem/web-qr-generator.git
 cd web-qr-generator
-
-# Check Python version compatibility
-python check_python.py
 
 # Create virtual environment (recommended)
 python -m venv .venv
@@ -83,8 +80,9 @@ web-qr-generator/
 ### Python Version Support
 | Version | Status | Notes |
 |---------|--------|-------|
-| 3.12+ | ✅ Recommended | Latest features and best performance |
-| 3.11 | ✅ Excellent | Great performance improvements |
+| 3.13+ | ✅ Recommended | Latest features and best performance |
+| 3.12 | ✅ Excellent | Great performance and features |
+| 3.11 | ✅ Great | Excellent performance improvements |
 | 3.10 | ✅ Minimum Required | Union types, match statements |
 | <3.10 | ❌ Not supported | Please upgrade Python |
 
@@ -103,19 +101,6 @@ python app.py  # Server auto-reloads on changes
 
 ### Customization
 Modify CSS variables in `static/css/styles.css` for theming, or adjust QR settings in `app.py`.
-
-## Deployment
-
-### Local
-```bash
-python app.py
-```
-
-### Production
-```bash
-pip install gunicorn
-gunicorn --bind 0.0.0.0:5000 app:app
-```
 
 ## License
 

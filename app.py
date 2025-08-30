@@ -16,6 +16,9 @@ if sys.version_info < (3, 10):
     logger.error("Python 3.10+ is required for this application")
     sys.exit(1)
 
+# Log Python version for debugging
+logger.info(f"Running on Python {sys.version}")
+
 
 @app.route('/')
 def main():

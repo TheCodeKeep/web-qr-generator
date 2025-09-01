@@ -13,8 +13,9 @@
         font-size: 1rem;
     }
 
-    .content, .input-section {
-        padding: 1.5rem, 1.25rem;
+    .content,
+    .input-section {
+        padding: 1.5rem 1.25rem;
     }
 
     .button-group {

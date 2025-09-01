@@ -11,7 +11,10 @@
 .header::before {
     content: '';
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(135deg, rgba(67, 56, 202, 0.05) 0%, rgba(67, 56, 202, 0.02) 100%);
     pointer-events: none;
 }
@@ -130,7 +133,9 @@
     border: 1px solid rgba(67, 56, 202, 0.15);
     border-radius: var(--border-radius);
     color: var(--text-primary);
-    font: 600 0.95rem inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: inherit;
     cursor: pointer;
     transition: var(--transition);
 }
@@ -154,10 +159,12 @@
     transition: transform 0.3s ease;
     color: var(--primary-color);
     font-size: 0.875rem;
+    opacity: 1;
 }
 
 .expand-icon.expanded {
     transform: rotate(180deg);
+    opacity: 1;
 }
 
 .suggestions-content {
@@ -191,7 +198,9 @@
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
-    font: 500 0.85rem inherit;
+    font-weight: 500;
+    font-size: 0.85rem;
+    font-family: inherit;
     color: var(--text-primary);
     display: flex;
     align-items: center;
@@ -229,6 +238,7 @@
     color: var(--primary-color);
     font-size: 0.95rem;
     flex-shrink: 0;
+    opacity: 1;
 }
 
 /* Form Elements */
@@ -236,7 +246,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font: 700 1.1rem inherit;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: inherit;
     margin-bottom: 0.75rem;
     color: var(--text-primary);
 }
@@ -244,6 +256,7 @@
 .input-label i {
     color: var(--primary-color);
     font-size: 1.2rem;
+    opacity: 1;
 }
 
 .input-wrapper {
@@ -281,6 +294,7 @@
     transform: translateY(-50%);
     color: var(--primary-color);
     font-size: 1.3rem;
+    opacity: 1;
 }
 
 /* Buttons */
@@ -293,7 +307,9 @@
 .btn {
     flex: 1;
     padding: 1.25rem 2rem;
-    font: 700 1.1rem inherit;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: inherit;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -345,6 +361,7 @@
 
 .btn i {
     font-size: 1.2rem;
+    opacity: 1;
 }
 
 /* QR Output */
@@ -378,7 +395,6 @@
 .success-message, .error-message {
     padding: 1rem;
     border-radius: var(--border-radius);
-    border: 1px solid;
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -389,13 +405,13 @@
 .success-message {
     background: rgba(16, 185, 129, 0.1);
     color: var(--success-color);
-    border-color: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .error-message {
     background: rgba(239, 68, 68, 0.1);
     color: var(--error-color);
-    border-color: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .success-message.fade-out, .error-message.fade-out {
@@ -432,7 +448,9 @@
 }
 
 .stat-label {
-    font: 500 0.875rem inherit;
+    font-weight: 500;
+    font-size: 0.875rem;
+    font-family: inherit;
     color: var(--text-primary);
     margin-top: 0.25rem;
 }
@@ -450,7 +468,7 @@
 [data-theme="dark"] .expandable-header:focus,
 [data-theme="dark"] .suggestion-item:focus,
 [data-theme="dark"] .btn:focus {
-    outline: 3px solid rgba(139, 92, 246, 0.6);
+    outline: 2px solid rgba(139, 92, 246, 0.6);
 }
 
 .suggestion-item:focus {

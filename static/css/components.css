@@ -458,24 +458,26 @@
 /* Focus styles */
 .theme-toggle:focus,
 .expandable-header:focus,
-.suggestion-item:focus,
 .btn:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
 
-[data-theme="dark"] .theme-toggle:focus,
-[data-theme="dark"] .expandable-header:focus,
-[data-theme="dark"] .suggestion-item:focus,
-[data-theme="dark"] .btn:focus {
-    outline: 2px solid rgba(139, 92, 246, 0.6);
-}
-
 .suggestion-item:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
     background: rgba(67, 56, 202, 0.12);
     border-color: var(--primary-color);
 }
 
+[data-theme="dark"] .theme-toggle:focus,
+[data-theme="dark"] .expandable-header:focus,
+[data-theme="dark"] .btn:focus {
+    outline: 2px solid rgba(139, 92, 246, 0.6);
+}
+
 [data-theme="dark"] .suggestion-item:focus {
+    outline: 2px solid rgba(139, 92, 246, 0.6);
     background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.6);
 }

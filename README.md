@@ -49,6 +49,37 @@ python app.py
 
 Open [http://localhost:5000](http://localhost:5000) in your browser.
 
+## Testing
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=app --cov-report=xml
+
+# Run with HTML formatted coverage report
+pytest --cov=app --cov-report=html
+
+# Run specific test class
+pytest test_app.py::TestApp -v
+
+# Run with detailed output
+pytest -v --tb=long
+```
+
+### Test Coverage
+
+The test suite includes:
+- ✅ **Route Testing** - All endpoints and error handlers
+- ✅ **QR Generation** - Valid inputs, edge cases, and error handling
+- ✅ **Integration Tests** - Complete workflow testing
+- ✅ **Error Scenarios** - Exception handling and validation
+
+View the coverage report by opening `htmlcov/index.html` after running tests with coverage.
+
 ## Usage
 
 1. **Enter content** in the text field (URLs, emails, phone numbers, or any text)
@@ -66,16 +97,19 @@ Open [http://localhost:5000](http://localhost:5000) in your browser.
 ### Project Structure
 ```
 web-qr-generator/
-├── app.py              # Flask application
-├── requirements.txt    # Dependencies
-├── static/            # CSS, JS, favicons
-└── templates/         # HTML templates
+├── app.py                 # Flask application
+├── test_app.py           # Test suite
+├── requirements.txt      # Dependencies
+├── pytest.ini           # Pytest configuration
+├── static/              # CSS, JS, favicons
+└── templates/           # HTML templates
 ```
 
 ### Tech Stack
 - **Backend**: Python 3.10+, Flask 3.1.2
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
 - **QR Generation**: qrcode library (SVG output)
+- **Testing**: pytest, pytest-cov, pytest-mock
 
 ### Python Version Support
 | Version | Status | Notes |

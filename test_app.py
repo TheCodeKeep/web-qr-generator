@@ -81,8 +81,7 @@ class TestApp:
         mock_qrcode.return_value = mock_qr_instance
         response = client.post('/generate', data={'text': 'test'})
         assert response.status_code == 400
-        assert (b'An error occurred while generating the QR code'
-                in response.data)
+        assert b'An error occurred while generating the QR code' in response.data
 
 
 class TestGenerateQRFunction:
